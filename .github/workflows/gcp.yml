@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +19,8 @@ jobs:
 
     - uses: 'google-github-actions/auth@v2'
       with:
-        credentials_json: '${{ secrets.MOJ_SEKRET }}' # Replace with the name of your GitHub Actions secret
+        workload_identity_provider: 'projects/25154119731/locations/global/workloadIdentityPools/abcde/providers/github-provider'
+        service_account: 'rare-palace-446519-r2@appspot.gserviceaccount.com'
     
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
